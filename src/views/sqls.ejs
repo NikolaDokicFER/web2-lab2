@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SQL Injection/CSRF</title>
+        <link rel='stylesheet' href='/styles/main.css' />
+    </head>
+    
+    <body>
+        <h1>
+           SQL Injection SAFE <br>
+           TOP 10 ATP tennis players information
+        </h1>
+        <h2>
+            <button on>
+                <a href="https://localhost:4080/sql/safe">SAFE</a>
+            </button>
+            <button on>
+                <a href="https://localhost:4080/sql/unsafe">UNSAFE</a>
+            </button>
+        </h2>
+        <h3>
+            <button on>
+                <a href="https://localhost:4080/csrf/safe">CSRF</a>
+            </button>
+        </h3>
+        <div class="move">
+            <form action="/sql/safe" method="post">
+                <label for="playerName">Enter a players name (Example: Rafael): </label>
+                <input type="text" id="playerName" name="playerName">
+                <input type="submit" value="Submit">
+            </form> 
+        </div>
+        <table>
+            <tr>
+                <th width="100px">Atp rank</th>
+                <th width="100px">Ime</th>
+                <th width="100px">Prezime</th>
+                <th width="100px">Država</th>
+                <th width="100px">Jača ruka</th>
+                <th width="100px">Reket</th>
+            </tr>
+            <% for(var j=0; j<players.length; j++){ %>
+            <tr>
+                <td><%= players[j].atprank %></td>
+                <td><%= players[j].firstname %></td>
+                <td><%= players[j].lastname %></td>
+                <td><%= players[j].country %></td>
+                <td><%= players[j].stronghand %></td>
+                <td><%= players[j].racket %></td>
+            </tr>
+            <% } %>
+        </table>
+    </body>
+</html>

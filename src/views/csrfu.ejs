@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SQL Injection/CSRF</title>
+        <link rel='stylesheet' href='/styles/main.css' />
+    </head>
+    
+    <body>
+        <h1>
+           CSRF(Cross Site Request Forgery) UNSAFE <br>
+           Bank payment
+        </h1>
+        <h2>
+            <button on>
+                <a href="https://localhost:4080/csrf/test">TEST</a>
+            </button>
+            <button on>
+                <a href="https://localhost:4080/csrf/safe">SAFE</a>
+            </button>
+            <button on>
+                <a href="https://localhost:4080/csrf/unsafe">UNSAFE</a>
+            </button>
+        </h2>
+        <h3>
+            <button on>
+                <a href="https://localhost:4080/sql/safe">SQL Injection</a>
+            </button>
+        </h3>
+        <div class="center">
+            <p>Start your payment:</p>
+            <form action="/csrf/unsafe" method="post">
+                <label for="username">Enter recipient: </label>
+                <input type="text" id="username" name="username"><br><br>
+                <label for="amount">Enter amount($USD): </label>
+                <input type="text" id="amount" name="amount"><br><br>
+                <input type="submit" value="Submit">
+            </form> 
+        </div>
+        <%if(success==true){%>
+            <div class="succ">
+                USPJELO
+            </div>
+            <%}%>
+    </body>
+</html>
