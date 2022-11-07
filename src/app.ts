@@ -19,10 +19,11 @@ app.use(cookieParser(process.env.SECRET));
 var csrfProtect = csrf({cookie: true})
 var urlencodedParser = bodyParser.urlencoded({extended: false})
 
-const portServer = 4080
+const externalUrl = process.env.RENDER_EXTERNAL_URL;
+const port = externalUrl && process.env.PORT ? parseInt(process.env.PORT) : 4080
 
 const config = {
-  baseURL: 'localhost:4080',
+  baseURL:  externalUrl ||  `https://localhost:${port}`
 };
 
 const pool = new Pool()
@@ -103,10 +104,18 @@ app.post('/csrf/unsafe', (req, res) => {
 });
 
 
-https.createServer({
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert')
-  }, app)
-  .listen(portServer, function () {
-    console.log(`Server running at https://localhost:${portServer}/`);
-});
+if (externalUrl) {
+  const hostname = '127.0.0.1';
+  app.listen(port, hostname, () => {
+  console.log(`Server locally running at http://${hostname}:${port}/ and from
+  outside on ${externalUrl}`);
+  });
+}else{
+  https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+    }, app)
+    .listen(port, function () {
+      console.log(`Server running at https://localhost:${port}/`);
+      });
+}
